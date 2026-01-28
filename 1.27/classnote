@@ -1,0 +1,30 @@
+1. box
+    a. rectangles for layout and collision
+    b. "Axis-Aligned Bounding Boxes" or "AABBs"
+2. functions:
+    a. display (kind of box)
+        i.  inline
+    b. width and height
+    c. margin 
+        i. margin: 0 auto; centering
+    d. padding (soace around and inside box)
+        i. 1 left right
+        ii. 2 left right // up bottom
+        iii. 更多 上右下左
+    d. border    
+        i. width, style, color, radius
+    e. background
+    f. typography
+        i. t-family
+        ii. font-size
+        iii. font-weight
+        iv. line-height
+        v. color
+        vi. text-align
+3. unit
+    a. pixels
+    b. percentages
+    c. viewport: 100vw/uh phone screen size
+    d. em/rem mobile friendly, relative to font size
+
+
