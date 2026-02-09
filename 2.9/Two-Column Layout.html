@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <span>This is the Title lalalalla</span>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+    <section>
+        <h1>Left Column</h1>
+        <p>drag me to change the layout</p>
+    </section>
+
+    <aside>
+        <h1>Right Column</h1>
+        <p>my size changes with the left column</p>
+    </aside>
+    </main>
+
+    <footer>
+    <p>What can I say.</p>
+    </footer>  
+</body>
+
+<style>
+  body{
+  margin: 0;
+  padding: 24px;
+  background: #eef7f1;
+  color: #0e6e41;
+  box-shadow: 0 10px 30px rgba(0,120,80,0.12);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+
+header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 14px 18px;
+  margin-bottom: 16px;
+
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(14,110,65,0.18);
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0,120,80,0.40);
+
+  backdrop-filter: blur(8px);
+  
+}
+
+header span{
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+nav{
+  display: flex;
+  gap: 12px;
+}
+
+nav a{
+  text-decoration: none;
+  color: #0e6e41;
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 10px;
+}
+
+nav a:hover{
+  box-shadow: 0 5px 15px rgba(0,120,80,0.40);
+}
+
+main{
+  display: flex;
+  flex-direction: row;   
+  align-items: stretch;
+  gap: 16px;
+
+  padding: 16px;
+  margin: 0 0 16px;
+  
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(14,110,65,0.15);
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0,120,80,0.40);
+  backdrop-filter: blur(10px);
+  flex-wrap: nowrap; 
+}
+
+
+section{
+  flex:1;
+  background: linear-gradient(135deg, rgba(212,234,240,0.7), rgba(238,247,241,0.9));
+  border: 1px solid rgba(14,110,65,0.16);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 22px rgba(0,120,80,0.10);
+}
+aside{
+  flex: 0 0 300px;    
+  max-width: 300px;
+  padding: 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(14,110,65,0.16);
+  background: linear-gradient(135deg, rgba(212,234,240,0.7), rgba(238,247,241,0.9));
+  box-shadow: 0 10px 22px rgba(0,120,80,0.10);
+}
+
+section h1,
+aside h1{
+  margin: 0 0 10px;
+  font-size: 1.25rem;
+  letter-spacing: 0.2px;
+  
+}
+
+section p,
+aside p{
+  margin: 0;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+/* --- Footer --- */
+footer{
+  padding: 14px 18px;
+
+  background: rgba(255,255,255,0.75);
+  border: 1px solid rgba(14,110,65,0.15);
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0,120,80,0.40);
+
+  backdrop-filter: blur(8px);
+}
+
+footer p{
+  margin: 0;
+}
+
+
+
+
+
+  
+  @media (max-width: 480px){
+  main{
+    flex-direction: column;
+  }
+  aside{
+    flex: 1;
+    max-width: none;
+  }
+}
+</style>
+</html>
