@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Da Ma 打马</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+
+<body>
+
+  <header>
+    <span class="site-title">打马 [Da Ma]</span>
+    <nav>
+      <a href="#rules">Game Rules</a>
+
+      <a href="dice.html">Dice References</a>
+
+      <a href="#interest">Interest</a>
+    </nav>
+  </header>
+
+
+  <main id="template" class="card frame">
+  <h1>Setting</h1>
+
+  <div class="main1-grid">
+
+    <aside class="card panel board">
+      <h2>打马棋盘 [Qipan] Chessboard</h2>
+      <img class="img-plain" src="打马.png" alt="打马棋盘">
+    </aside>
+
+
+    <div class="right-stack">
+
+      <section class="card panel pieces">
+        <h2>打马棋子 [Qizi] Chess Piece</h2>
+        <img 
+            class="img-plain piece-img" 
+            src="打馬所用的打馬錢.png" 
+            alt="打马游戏棋子示意图。每方二十枚扁圆状棋子，可堆叠使用。一般正面绘有马的图案，反面写有两字或四字马名，称为打马钱、将马钱或马钱，属于花钱的一种。">
+      </section>
+
+
+
+      <section class="card panel details">
+        <h2>棋盘节点 [Jiedian] Checkpoints</h2>
+        <p>
+          The starting and ending squares are labeled 赤岸驿 [Chi'an Yi] and 尚乘局[Shangcheng Ju] respectively. Along the route, at every eighth square, the spaces are labeled 陇西监 [Longxi Jian], 玉门关 [Yu Men Guan], 汧阳监 [Qian Yang Jian], 沙苑监 [Sha Yuan Jian], 函谷关 [Han Gu Guan], 太仆寺 [Tai Pu Si], 天驷监 [Tian Si Jian], 骐驿院 [Qi Yi Yuan], and 飞龙院 [Fei Long Yuan]. These eleven special squares are collectively called 窝[Wo].
+
+        </p>
+      </section>
+    </div>
+  </div>
+</main>
+
+
+  <section id="rules" class="rules">
+
+      <div class="rules-card">
+
+        <div class="rules-topbar">
+          <h2>Game Rules</h2>
+
+          <button class="rules-esc rules-close" type="button" aria-label="Close rules (ESC)">
+            ESC
+          </button>
+        </div>
+
+    <ol class="rules-list">
+  <li>Two to five players participate in the game.</li>
+
+  <li>
+    The betting unit is called a 贴 [Tie]. All players first agree on the cash value each Tie represents, which must not exceed three wen. The total prize pool is then placed in the public pot.
+    When receiving rewards or penalties, players take from or add to the pot accordingly. If any player wins half or more of the total pot, the other players must replenish the pot to its original amount.
+  </li>
+
+  <li>Any player who makes excessive noise is fined ten Tie.</li>
+
+  <li>
+    After the game begins, players take turns rolling the dice. If the result matches the previous player’s pattern type, it is called 真撞[Zhen Zhuang]. If it matches the previous player’s number, it is called 傍撞 [Bang Zhuang].
+  </li>
+
+  <li>After rolling, the player first receives the corresponding reward or penalty, then chooses either 下马 [Xia Ma] or 行马 [Xing Ma].</li>
+
+  <li>
+    Reward Patterns:
+    <ul type="a">
+      <li>
+        Rewards are given according to the pattern type for N Tie.
+      </li>
+      <li>If the player chooses Xia Ma, they place down N of their own pieces. If it is also 傍本彩 [Bang Ben Cai], place two additional pieces.</li>
+    </ul>
+  </li>
+
+  <li>
+    Fine Patterns:
+    <ul type="c">
+      <li>The player is fined two Tie, and the next player takes the turn. If the next player chooses Xia Ma, they place two pieces.</li>
+    </ul>
+  </li>
+
+  <li>
+    Scatter Patterns:
+    <ul type="c">
+      <li>
+        The first scatter pattern rolled by a player, if it is not another player's Zhen Ben Cai or Bang Ben Cai, becomes that player’s Zhen Ben Cai. Patterns with the same number become Bang Ben Cai.
+        Later, when rolling their own Zhen Ben Cai or Bang Ben Cai, the player receives three or two Tie respectively and gains an extra turn. If choosing Xia Ma, place three pieces.
+      </li>
+      <li>Rolling another player’s Zhen Ben Cai or Bang Ben Cai requires giving three or two Tie to that player, and the turn passes to them.</li>
+      <li>
+        If Zhen Zhuang or Bang Zhuang occurs with the previous player, the turn returns to the previous player, and the current player is fined three or two Tie respectively. The current player then rerolls.
+        If the second roll is the same, repeat the process. If the same result occurs three times, the fine doubles, but the player may act.
+      </li>
+      <li>If the first roll is Zhen Ben Cai or none of the above applies, place one horse or move one horse.</li>
+      <li>
+        When placing or moving a horse between the start and finish, the piece may enter empty squares, squares with the player’s own pieces, or enemy squares with equal or fewer pieces.
+        If forward movement is blocked, the piece must reverse direction to complete the remaining steps.
+      </li>
+      <li>If landing on the player’s own piece, the pieces stack and the player gains an extra turn. They move thereafter as one unit.</li>
+      <li>
+        If landing on enemy pieces with equal or fewer numbers, those enemy pieces are returned to the opponent’s hand. This action is called Da Ma. The player gains an extra turn and receives Tie equal to the number of captured pieces.
+        If the captured pieces equal the opponent’s full twenty pieces, the reward becomes half of the total pot. The player whose pieces were captured must perform Xia Ma on their next turn.
+      </li>
+      <li>
+        Entering any of the eight Wo (except the start, finish, and Fei Long Yuan) grants one Tie. However, these eight Wo cannot be entered or passed if occupied by enemy pieces.
+      </li>
+      <li>
+        The first player to move all their pieces to the finish wins.
+        If arriving by moving six spaces from Jia, it is called Xi Man and awards double the total pot.
+        If completed from other positions or sequentially from Qian, it is called Cu Man and awards the full pot.
+      </li>
+    </ul>
+  </li>
+
+  <li>
+    Xia Ma
+    <ul type="d">
+      <li>
+        The player stacks the corresponding number of their pieces and, counting the start as the first square, advances them together to square M, where M equals the dice number.
+      </li>
+    </ul>
+  </li>
+</ol>
+
+</div>
+</section>
+
+
+
+
+
+  <div id="interest" class="modal">
+    <a class="modal-backdrop" href="#"></a>
+
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h2>Interest</h2>
+        <a class="modal-close" href="#" aria-label="close">✕</a>
+      </div>
+
+      <form class="modal-form">
+        <label>
+          Name
+          <input type="text" placeholder="Your name" />
+        </label>
+
+        <label>
+          Email
+          <input type="email" placeholder="you@example.com" />
+        </label>
+
+        <label>
+          Message
+          <textarea rows="4" placeholder="What are you interested in?"></textarea>
+        </label>
+
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+  <footer>
+    <h3>History</h3>
+    <p class="footer-footnote">
+      Da Ma emerged during the Song dynasty. The gameplay involves rolling dice patterns to move horse tokens across the board, with victory achieved by reaching the final square. The game was frequently used for gambling.
+The version most commonly referenced in East Asian cultural studies today is the 《打马图经》Dama Tujing compiled by Li Qingzhao after the Jingkang Incident.</p>
+    </p>
+    <a class="more" href="https://zh.wikipedia.org/wiki/%E6%89%93%E9%A6%AC" target="_blank" rel="noopener">More Info Link 🔗</a>
+  </footer>
+    <script src="script.js"></script>
+    
+</body>
+
+
+</html>
