@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenAI Fetch Demo</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      padding: 2rem;
+    }
+
+    #output {
+      max-width: 800px;
+      width: 100%;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      min-height: 120px;
+    }
+
+    input {
+      width: 100%;
+      max-width: 600px;
+      padding: 1rem;
+      font-size: 1.2rem;
+      border-radius: 0.25rem;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      background-color: #007bff;
+      font-size: 1.2rem;
+      color: #fff;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="promptInput" placeholder="Enter a prompt for OpenAI..." />
+
+  <button type="button" id="submitBtn">Do Something!</button>
+
+  <div id="output">
+    <p>Enter a prompt and click the button.</p>
+  </div>
+
+  <script>
+    const button = document.getElementById("submitBtn");
+    const input = document.getElementById("promptInput");
+    const output = document.getElementById("output");
+
+    button.addEventListener("click", async () => {
+
+      const userPrompt = input.value.trim();
+
+      if (!userPrompt) {
+        output.innerHTML = "<p>Please enter a prompt first.</p>";
+        return;
+      }
+
+      output.innerHTML = "<p>Loading...</p>";
+
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer YOUR_OPENAI_API_KEY"
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-mini",
+            messages: [
+              { role: "user", content: userPrompt }
+            ]
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("API request failed");
+        }
+
+        const data = await response.json();
+
+        const reply = data.choices[0].message.content;
+
+        output.innerHTML = `<p>${reply}</p>`;
+
+      } catch (error) {
+        output.innerHTML = `<p style="color:red;">Error: ${error.message}</p>`;
+      }
+    });
+  </script>
+
+</body>
+</html>

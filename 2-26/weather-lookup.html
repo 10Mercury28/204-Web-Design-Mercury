@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Lookup</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.5rem;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    h1 { font-size: 2rem; }
+
+    .search-row { display: flex; gap: 0.5rem; }
+
+    input {
+      padding: 0.75rem 1rem;
+      font-size: 1.25rem;
+      border: 2px solid #ccc;
+      border-radius: 0.25rem;
+      width: 300px;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #007bff;
+      font-size: 1.25rem;
+      color: #fff;
+      border: none;
+      border-radius: 0.25rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover { background-color: #0056b3; }
+
+    #output {
+      max-width: 500px;
+      min-height: 100px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 0.25rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .muted { color: #666; }
+    .error { color: #b00020; }
+    .big { font-size: 2rem; font-weight: 700; margin: 0.25rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Weather Lookup</h1>
+
+  <div class="search-row">
+    <input type="text" id="city-input" placeholder="Enter a city name..." />
+    <button type="button" id="search-btn">Search</button>
+  </div>
+
+  <div id="output">
+    <p>Enter a city name and click Search to see the weather.</p>
+  </div>
+
+  <script>
+    const cityInput = document.querySelector("#city-input");
+    const searchBtn = document.querySelector("#search-btn");
+    const output = document.querySelector("#output");
+
+    function renderLoading(city) {
+      output.innerHTML = `
+        <p class="muted">Looking up <strong>${escapeHtml(city)}</strong>...</p>
+      `;
+    }
+
+    function renderError(message) {
+      output.innerHTML = `<p class="error">${escapeHtml(message)}</p>`;
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function pickLatLon(geoData) {
+      // Common shapes you might see:
+      // 1) Google-like: { results: [ { geometry: { location: { lat, lng }}}]}
+      const lat1 = geoData?.results?.[0]?.geometry?.location?.lat;
+      const lon1 = geoData?.results?.[0]?.geometry?.location?.lng;
+
+      // 2) OpenCage-like: { results: [ { geometry: { lat, lng } } ] }
+      const lat2 = geoData?.results?.[0]?.geometry?.lat;
+      const lon2 = geoData?.results?.[0]?.geometry?.lng;
+
+      // 3) GeoJSON-like: { features: [ { geometry: { coordinates: [lon, lat] } } ] }
+      const coords = geoData?.features?.[0]?.geometry?.coordinates;
+      const lon3 = Array.isArray(coords) ? coords?.[0] : undefined;
+      const lat3 = Array.isArray(coords) ? coords?.[1] : undefined;
+
+      // 4) Some APIs: { latitude, longitude }
+      const lat4 = geoData?.latitude;
+      const lon4 = geoData?.longitude;
+
+      const lat = lat1 ?? lat2 ?? lat3 ?? lat4;
+      const lon = lon1 ?? lon2 ?? lon3 ?? lon4;
+
+      return { lat, lon };
+    }
+
+    function pickWeather(weatherData) {
+      // Common shapes you might see:
+      // 1) open-meteo: { current_weather: { temperature, windspeed, weathercode } }
+      const temp1 = weatherData?.current_weather?.temperature;
+      const wind1 = weatherData?.current_weather?.windspeed;
+      const code1 = weatherData?.current_weather?.weathercode;
+
+      // 2) "current": { temperature, weather_descriptions: ["..."] }
+      const temp2 = weatherData?.current?.temperature;
+      const desc2 = weatherData?.current?.weather_descriptions?.[0];
+      const wind2 = weatherData?.current?.wind_speed;
+
+      // 3) generic: { temperature, description }
+      const temp3 = weatherData?.temperature;
+      const desc3 = weatherData?.description;
+
+      // 4) NWS-like-ish: { properties: { temperature: { value, unitCode }, textDescription } }
+      const temp4 = weatherData?.properties?.temperature?.value;
+      const desc4 = weatherData?.properties?.textDescription;
+
+      const temperature = temp1 ?? temp2 ?? temp3 ?? temp4;
+      const description = desc2 ?? desc3 ?? desc4 ?? (code1 != null ? `Weather code: ${code1}` : undefined);
+      const wind = wind1 ?? wind2;
+
+      return { temperature, description, wind };
+    }
+
+    async function handleSearch() {
+      const city = cityInput.value.trim();
+      if (!city) {
+        renderError("Please enter a city name.");
+        return;
+      }
+
+      renderLoading(city);
+
+      try {
+        // (a) Geocode
+        const addressParam = encodeURIComponent(city).replaceAll("%20", "+");
+        const geoRes = await fetch(`/api/geocode?address=${addressParam}`);
+        if (!geoRes.ok) throw new Error(`Geocoding request failed (${geoRes.status})`);
+
+        const geoData = await geoRes.json();
+        console.log("Geocode response:", geoData);
+
+        const { lat, lon } = pickLatLon(geoData);
+        if (lat == null || lon == null) {
+          throw new Error("Could not find coordinates for that location. Try a more specific city name.");
+        }
+
+        // (b) Weather
+        const weatherRes = await fetch(`/api/weather?latitude=${encodeURIComponent(lat)}&longitude=${encodeURIComponent(lon)}`);
+        if (!weatherRes.ok) throw new Error(`Weather request failed (${weatherRes.status})`);
+
+        const weatherData = await weatherRes.json();
+        console.log("Weather response:", weatherData);
+
+        // (c) Display
+        const { temperature, description, wind } = pickWeather(weatherData);
+
+        output.innerHTML = `
+          <div>
+            <p><strong>${escapeHtml(city)}</strong></p>
+            <p class="muted">Lat: ${Number(lat).toFixed(3)} | Lon: ${Number(lon).toFixed(3)}</p>
+            ${temperature != null ? `<p class="big">${escapeHtml(temperature)}°</p>` : `<p class="muted">Temperature unavailable</p>`}
+            ${description ? `<p>${escapeHtml(description)}</p>` : `<p class="muted">Description unavailable</p>`}
+            ${wind != null ? `<p class="muted">Wind: ${escapeHtml(wind)}</p>` : ``}
+          </div>
+        `;
+      } catch (err) {
+        console.error(err);
+        renderError(err?.message || "Something went wrong. Check the console for details.");
+      }
+    }
+
+    searchBtn.addEventListener("click", handleSearch);
+    cityInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") handleSearch();
+    });
+  </script>
+</body>
+</html>
