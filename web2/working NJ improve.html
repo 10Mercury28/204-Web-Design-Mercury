@@ -10,19 +10,20 @@
   />
   <style>
     :root {
-
-
       --text: #38553a;
-      --muted: #6c6f6c;
+      --muted: #4d5c4d;
       --accent: #5af0be;
-      --accent-2: #36823b;
-      --success: #94d2a8;
+      --accent-2: #3e7f42;
+      --success: #1c8c3f;
       --warning: #ffd27d;
       --danger: #ff9898;
-      --shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+      --shadow: 0 16px 40px rgba(21, 19, 19, 0.627);
       --radius: 20px;
-      --radius-sm: 14px;
       --max-width: 1180px;
+      --glass-bg: rgba(241, 233, 233, 0.329);
+      --glass-border: rgba(163, 197, 177, 0.673);
+      --panel-bg: rgba(141, 172, 152, 0.669);
+      --panel-border: rgba(255, 255, 255, 0.559);
     }
 
     * {
@@ -36,8 +37,7 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        url('./bg.jpg') center center / cover no-repeat fixed;
+      background: url("./bg.jpg") center center / cover no-repeat fixed;
       color: var(--text);
       line-height: 1.6;
     }
@@ -52,7 +52,9 @@
     }
 
     button,
-    input {
+    input,
+    textarea,
+    select {
       font: inherit;
     }
 
@@ -79,7 +81,7 @@
     .food-card {
       background:
         linear-gradient(rgba(172, 192, 176, 0.117), rgba(88, 114, 83, 0.72)),
-        url('./frame.jpg') center center / cover no-repeat;
+        url("./frame.jpg") center center / cover no-repeat;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
@@ -103,20 +105,6 @@
       pointer-events: none;
     }
 
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.38rem 0.8rem;
-      background: rgba(45, 156, 99, 0.682);
-      border: 1px solid rgba(124, 199, 255, 0.16);
-      border-radius: 999px;
-      color: var(--accent-2);
-      font-size: 0.9rem;
-      letter-spacing: 0.02em;
-      margin-bottom: 1rem;
-    }
-
     h1,
     h2,
     h3 {
@@ -125,7 +113,7 @@
     }
 
     h1 {
-      font-size: clamp(2rem, 5vw, 4rem);
+      font-size: clamp(2.3rem, 5vw, 4rem);
       margin-bottom: 1rem;
       max-width: 12ch;
     }
@@ -175,35 +163,9 @@
     }
 
     .btn-secondary {
-      background: rgba(115, 171, 101, 0.451);
+      background: rgba(184, 221, 204, 0.745);
       color: var(--text);
       border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-
-    .hero-notes {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-      margin-top: 1.4rem;
-    }
-
-    .note {
-      background: rgba(205, 216, 209, 0.545);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: #38553a;
-      border-radius: 16px;
-      padding: 0.9rem;
-    }
-
-    .note strong {
-      display: block;
-      margin-bottom: 0.25rem;
-      font-size: 0.97rem;
-    }
-
-    .note span {
-      color: var(--muted);
-      font-size: 0.9rem;
     }
 
     .hero-card {
@@ -231,16 +193,16 @@
       padding: 0.35rem 0.75rem;
       border-radius: 999px;
       font-size: 0.84rem;
-      background: rgba(148, 210, 168, 0.1);
+      background: rgba(148, 210, 168, 0.459);
       color: var(--success);
       border: 1px solid rgba(148, 210, 168, 0.18);
     }
 
     .preview-card {
-      background: rgba(255, 255, 255, 0.06);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
       border-radius: 18px;
       padding: 1rem;
-      border: 1px solid rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
     }
@@ -256,10 +218,15 @@
       font-size: 0.95rem;
     }
 
+    .spaced-card {
+      margin-top: 1rem;
+    }
+
     .manual-city-form {
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 0.75rem;
+      margin-bottom: 1rem;
     }
 
     .manual-city-form input {
@@ -267,13 +234,13 @@
       border-radius: 14px;
       padding: 0.95rem 1rem;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(115, 171, 101, 0.646);
-      color: rgba(92, 197, 125, 0.748);
+      background: rgba(165, 187, 160, 0.646);
+      color: rgba(18, 98, 43, 0.748);
       outline: none;
     }
 
     .manual-city-form input::placeholder {
-      color: #90a0bf;
+      color: #234f43;
     }
 
     main {
@@ -338,11 +305,14 @@
 
     .weather-card,
     .advice-card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(180deg, rgba(230, 243, 235, 0.235), rgba(202, 202, 202, 0.118));
+      border: 1px solid rgba(247, 244, 244, 0.401);
       border-radius: 18px;
       padding: 1rem;
       min-height: 210px;
+      margin-top: 1rem;
+      backdrop-filter: blur(0.55rem);
+      -webkit-backdrop-filter: blur(5px);
     }
 
     .weather-top {
@@ -353,7 +323,8 @@
       margin-bottom: 1rem;
     }
 
-    .weather-top h3 {
+    .weather-top h3,
+    .advice-card h3 {
       font-size: 1.1rem;
     }
 
@@ -386,19 +357,19 @@
       margin-top: 1rem;
       padding: 0.85rem 0.95rem;
       border-radius: 16px;
-      background: rgba(124, 199, 255, 0.08);
-      border: 1px solid rgba(124, 199, 255, 0.14);
+      background: rgba(125, 169, 150, 0.396);
+      border: 1px solid rgba(255, 255, 255, 0.388);
       color: var(--text);
       font-weight: 600;
     }
 
-    .advice-card h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.35rem;
+    .advice-card p,
+    .food-intro,
+    .footer-note {
+      color: var(--muted);
     }
 
     .advice-card p {
-      color: var(--muted);
       margin-top: 0;
       margin-bottom: 0.9rem;
     }
@@ -413,15 +384,68 @@
     .chip {
       padding: 0.5rem 0.75rem;
       border-radius: 999px;
-      background: rgba(240, 180, 90, 0.1);
-      border: 1px solid rgba(240, 180, 90, 0.2);
-      color: #ffdba6;
+      background: rgba(151, 236, 255, 0.651);
+      border: 1px solid rgb(255, 255, 255);
+      color: #02718a;
       font-size: 0.92rem;
     }
 
-    .food-intro {
-      color: var(--muted);
-      margin: 0;
+    .note-panel {
+      margin-top: 1rem;
+    }
+
+    .note-panel-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: start;
+    }
+
+    .control-panel {
+      margin-bottom: 1rem;
+    }
+
+    .control-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      align-items: end;
+    }
+
+    .control-label {
+      display: block;
+    }
+
+    .control-label-text {
+      display: block;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    .control-input,
+    .control-select,
+    .control-textarea {
+      width: 100%;
+      border-radius: 12px;
+      padding: 0.7rem 0.85rem;
+      border: 1px solid var(--panel-border);
+      background: var(--panel-bg);
+      color: var(--text);
+      outline: none;
+    }
+
+    .control-textarea {
+      min-height: 8.5rem;
+      resize: vertical;
+      padding: 0.95rem 1rem;
+      border-radius: 14px;
+    }
+
+    .range-input {
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
     }
 
     .food-grid {
@@ -511,7 +535,7 @@
       border-radius: 12px;
       padding: 0.78rem 0.92rem;
       cursor: pointer;
-      background: rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.31);
       color: var(--text);
       border: 1px solid rgba(255, 255, 255, 0.08);
       transition: transform 0.18s ease, background 0.18s ease;
@@ -523,7 +547,6 @@
     }
 
     .footer-note {
-      color: var(--muted);
       font-size: 0.92rem;
       margin-top: 1rem;
     }
@@ -538,17 +561,29 @@
       clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
+      background-color: aliceblue;
+    }
+
+    #nanjing-weather-details[hidden] {
+      display: none;
+    }
+
+    #load-nanjing-btn {
+      margin-top: 0.35rem;
+    }
+
+    .error-detail {
+      margin-top: 0.6rem;
+      font-size: 0.9rem;
+      color: #7a2f2f;
     }
 
     @media (max-width: 980px) {
       .hero-grid,
       .weather-grid,
       .advice-grid,
-      .food-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-notes {
+      .food-grid,
+      .control-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -564,17 +599,14 @@
         padding: 1rem;
       }
 
-      .manual-city-form {
+      .manual-city-form,
+      .note-panel-grid {
         grid-template-columns: 1fr;
       }
 
       .btn,
       .small-btn {
         width: 100%;
-      }
-
-      .food-grid {
-        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -583,34 +615,11 @@
   <header class="hero">
     <div class="container hero-grid">
       <section class="hero-copy" aria-labelledby="page-title">
-        <div class="eyebrow">Nanjing trip helper</div>
         <h1 id="page-title">Get ready for Nanjing.</h1>
         <p>
           Compare your local weather with Nanjing’s current temperature, get practical packing advice,
           and discover local foods you should try when you arrive.
         </p>
-
-        <div class="hero-actions">
-          <button class="btn btn-primary" id="use-location-btn" type="button">
-            Use my location
-          </button>
-          <a class="btn btn-secondary" href="#food-section">Skip to food ideas</a>
-        </div>
-
-        <div class="hero-notes" aria-label="Project highlights">
-          <div class="note">
-            <strong>Browser API</strong>
-            <span>Geolocation detects your local area for weather comparison.</span>
-          </div>
-          <div class="note">
-            <strong>Data API</strong>
-            <span>Live weather data powers clothing and suitcase advice.</span>
-          </div>
-          <div class="note">
-            <strong>Browser API</strong>
-            <span>Speech synthesis teaches you how to say “I want to eat...” in Mandarin.</span>
-          </div>
-        </div>
       </section>
 
       <aside class="hero-card" aria-labelledby="hero-preview-title">
@@ -630,7 +639,7 @@
         <div class="preview-card">
           <h3>Learn with food</h3>
           <p>
-            Explore six rotating Nanjing food picks, flip each card, and hear a useful Mandarin sentence out loud.
+            Let me pick some food for you. Flip each card and learn to order it in Mandarin.
           </p>
         </div>
       </aside>
@@ -650,6 +659,10 @@
               <h2 id="weather-heading">Weather comparison</h2>
               <p>We compare your local weather with Nanjing’s live weather so the packing advice feels relevant.</p>
             </div>
+            <div class="hero-actions">
+              <button class="btn btn-primary" id="use-location-btn" type="button">Use my location</button>
+              <a class="btn btn-secondary" href="#food-section">Skip to food ideas</a>
+            </div>
           </div>
 
           <form class="manual-city-form" id="manual-city-form" novalidate>
@@ -661,7 +674,6 @@
               placeholder="If location is denied, enter your city manually"
               autocomplete="off"
             />
-           
             <button class="btn btn-primary" type="submit">Use city</button>
           </form>
 
@@ -687,20 +699,34 @@
               <div class="weather-top">
                 <div>
                   <h3 id="nanjing-weather-title">Nanjing</h3>
-                  <div class="weather-location">Nanjing, Jiangsu, China</div>
+                  <div class="weather-location">32.0617° N, 118.7778° E</div>
                 </div>
                 <span class="pill">live weather</span>
               </div>
 
-              <div class="temp" id="nanjing-temp">--°C</div>
-              <ul class="weather-list">
-                <li><strong>Condition:</strong> <span id="nanjing-condition">Loading...</span></li>
-                <li><strong>Wind:</strong> <span id="nanjing-wind">--</span></li>
-                <li><strong>Source:</strong> <span>Open-Meteo weather data</span></li>
-              </ul>
+              <button class="btn btn-primary" id="load-nanjing-btn" type="button">
+                Show Nanjing weather
+              </button>
 
-              <div class="delta-box" id="temp-delta-box">
-                Compare your location with Nanjing to see whether you need extra layers.
+              <div class="preview-card spaced-card">
+                <h3>Nanjing weather preview</h3>
+                <p id="nanjing-preview-text">
+                  Click the button to load Nanjing weather using the fixed latitude and longitude.
+                </p>
+                <p class="error-detail" id="nanjing-error-detail"></p>
+              </div>
+
+              <div id="nanjing-weather-details" hidden>
+                <div class="temp" id="nanjing-temp">--°C</div>
+                <ul class="weather-list">
+                  <li><strong>Condition:</strong> <span id="nanjing-condition">Not loaded yet</span></li>
+                  <li><strong>Wind:</strong> <span id="nanjing-wind">--</span></li>
+                  <li><strong>Source:</strong> <span>Course weather API</span></li>
+                </ul>
+
+                <div class="delta-box" id="temp-delta-box">
+                  Load both weather cards to see the comparison.
+                </div>
               </div>
             </article>
           </div>
@@ -719,19 +745,19 @@
           <div class="advice-grid">
             <article class="advice-card" aria-labelledby="wear-title">
               <h3 id="wear-title">What to wear in Nanjing</h3>
-              <p id="wear-summary">Waiting for live weather before generating advice.</p>
+              <p id="wear-summary">Load Nanjing weather to generate advice.</p>
               <div class="chips" id="wear-chips"></div>
             </article>
 
             <article class="advice-card" aria-labelledby="pack-title">
               <h3 id="pack-title">What to put in your suitcase</h3>
-              <p id="pack-summary">Packing tips will appear after we compare your weather with Nanjing.</p>
+              <p id="pack-summary">Packing tips will appear after you load Nanjing weather.</p>
               <ul class="pack-list" id="pack-list"></ul>
 
-              <div class="preview-card" style="margin-top: 1rem;">
-                <h3 style="margin-bottom: 0.5rem;">Packing note</h3>
-                <div style="display:grid; grid-template-columns: 1fr auto; gap:0.75rem; align-items:start;">
-                  <textarea id="packing-note" rows="5" style="width:100%; resize:vertical; border-radius:14px; padding:0.95rem 1rem; border:1px solid rgba(255,255,255,0.08); background:rgba(7,13,24,0.45); color:var(--text); outline:none;">我已经放进箱子里的衣服是</textarea>
+              <div class="preview-card note-panel">
+                <h3>Packing note</h3>
+                <div class="note-panel-grid">
+                  <textarea id="packing-note" class="control-textarea">I will type in what I already have in my luggage</textarea>
                   <button class="btn btn-secondary" id="clear-note-btn" type="button">Clear</button>
                 </div>
               </div>
@@ -753,6 +779,23 @@
             <button class="btn btn-primary" id="refresh-food-btn" type="button">Show 6 new picks</button>
           </div>
 
+          <div class="preview-card control-panel">
+            <div class="control-grid">
+              <label class="control-label" for="voice-select">
+                <span class="control-label-text">Voice</span>
+                <select id="voice-select" class="control-select"></select>
+              </label>
+              <label class="control-label" for="pitch-control">
+                <span class="control-label-text">Pitch</span>
+                <input id="pitch-control" class="control-input range-input" type="range" min="0" max="2" step="0.1" value="1" />
+              </label>
+              <label class="control-label" for="rate-control">
+                <span class="control-label-text">Rate</span>
+                <input id="rate-control" class="control-input range-input" type="range" min="0.5" max="1.5" step="0.1" value="0.8" />
+              </label>
+            </div>
+          </div>
+
           <div class="food-grid" id="food-grid" aria-live="polite"></div>
           <p class="footer-note">
             Click a food card to flip it. Then tap the audio button to hear: <em>“我要吃 xxx”</em>.
@@ -763,40 +806,9 @@
   </main>
 
   <script>
-    const NANJING_COORDS = { latitude: 32.0603, longitude: 118.7969 };
-    const WEATHER_BASE_URL = 'https://api.open-meteo.com/v1/forecast';
-    const GEOCODE_BASE_URL = 'https://geocoding-api.open-meteo.com/v1/search';
-
-    const WEATHER_CODE_MAP = {
-      0: 'Clear sky',
-      1: 'Mainly clear',
-      2: 'Partly cloudy',
-      3: 'Overcast',
-      45: 'Fog',
-      48: 'Depositing rime fog',
-      51: 'Light drizzle',
-      53: 'Moderate drizzle',
-      55: 'Dense drizzle',
-      56: 'Light freezing drizzle',
-      57: 'Dense freezing drizzle',
-      61: 'Slight rain',
-      63: 'Moderate rain',
-      65: 'Heavy rain',
-      66: 'Light freezing rain',
-      67: 'Heavy freezing rain',
-      71: 'Slight snow fall',
-      73: 'Moderate snow fall',
-      75: 'Heavy snow fall',
-      77: 'Snow grains',
-      80: 'Slight rain showers',
-      81: 'Moderate rain showers',
-      82: 'Violent rain showers',
-      85: 'Slight snow showers',
-      86: 'Heavy snow showers',
-      95: 'Thunderstorm',
-      96: 'Thunderstorm with slight hail',
-      99: 'Thunderstorm with heavy hail'
-    };
+    const NANJING_COORDS = { latitude: 32.0617, longitude: 118.7778 };
+    const WEATHER_BASE_URL = 'https://cse2004.com/api/weather';
+    const GEOCODE_BASE_URL = 'https://cse2004.com/api/geocode';
 
     const FOODS = [
       {
@@ -902,18 +914,28 @@
       userWind: document.getElementById('user-wind'),
       userSource: document.getElementById('user-source'),
       userSourcePill: document.getElementById('user-source-pill'),
+
+      loadNanjingBtn: document.getElementById('load-nanjing-btn'),
+      nanjingPreviewText: document.getElementById('nanjing-preview-text'),
+      nanjingErrorDetail: document.getElementById('nanjing-error-detail'),
+      nanjingWeatherDetails: document.getElementById('nanjing-weather-details'),
       nanjingTemp: document.getElementById('nanjing-temp'),
       nanjingCondition: document.getElementById('nanjing-condition'),
       nanjingWind: document.getElementById('nanjing-wind'),
       tempDeltaBox: document.getElementById('temp-delta-box'),
+
       wearSummary: document.getElementById('wear-summary'),
       wearChips: document.getElementById('wear-chips'),
       packSummary: document.getElementById('pack-summary'),
       packList: document.getElementById('pack-list'),
+
       foodGrid: document.getElementById('food-grid'),
       refreshFoodBtn: document.getElementById('refresh-food-btn'),
       packingNote: document.getElementById('packing-note'),
-      clearNoteBtn: document.getElementById('clear-note-btn')
+      clearNoteBtn: document.getElementById('clear-note-btn'),
+      voiceSelect: document.getElementById('voice-select'),
+      pitchControl: document.getElementById('pitch-control'),
+      rateControl: document.getElementById('rate-control')
     };
 
     const state = {
@@ -922,66 +944,103 @@
       userLocationName: null
     };
 
+    const weatherCache = new Map();
+    let isLoadingUserWeather = false;
+    let availableVoices = [];
+
     function setStatus(message, tone = 'info') {
       els.statusBar.textContent = message;
       els.statusBar.className = `status-bar show ${tone}`;
     }
 
-    function weatherCodeToText(code) {
-      return WEATHER_CODE_MAP[code] || 'Unknown condition';
+    function fahrenheitToCelsius(fahrenheit) {
+      return (fahrenheit - 32) * 5 / 9;
     }
 
     function formatTemp(value) {
       return `${Math.round(value)}°C`;
     }
 
+    function formatWind(value) {
+      if (typeof value !== 'number' || Number.isNaN(value)) {
+        return '--';
+      }
+      return `${Math.round(value)} mph`;
+    }
+
     function buildWeatherUrl(latitude, longitude) {
       const params = new URLSearchParams({
         latitude: String(latitude),
-        longitude: String(longitude),
-        current: 'temperature_2m,weather_code,wind_speed_10m',
-        timezone: 'auto'
+        longitude: String(longitude)
       });
       return `${WEATHER_BASE_URL}?${params.toString()}`;
     }
 
     async function fetchWeatherByCoords(latitude, longitude) {
-      const response = await fetch(buildWeatherUrl(latitude, longitude));
-      if (!response.ok) {
-        throw new Error('Weather request failed.');
+      const cacheKey = `${latitude.toFixed(3)},${longitude.toFixed(3)}`;
+
+      if (weatherCache.has(cacheKey)) {
+        return weatherCache.get(cacheKey);
       }
+
+      const response = await fetch(buildWeatherUrl(latitude, longitude));
       const data = await response.json();
-      if (!data.current) {
+
+      console.log('weather raw data:', data);
+
+      if (!response.ok) {
+        throw new Error(`Weather request failed with status ${response.status}.`);
+      }
+
+      if (data.error) {
+        const apiMessage =
+          data.error.message ||
+          data.error.status ||
+          'The course weather API returned an error for this location.';
+        throw new Error(apiMessage);
+      }
+
+      const tempF = data.temperature?.degrees;
+      const conditionText = data.weatherCondition?.description?.text;
+      const windRaw = data.wind?.speed?.value ?? 0;
+
+      if (typeof tempF !== 'number' || !conditionText) {
         throw new Error('Weather data was incomplete.');
       }
-      return {
-        temperature: data.current.temperature_2m,
-        wind: data.current.wind_speed_10m,
-        weatherCode: data.current.weather_code,
-        condition: weatherCodeToText(data.current.weather_code)
+
+      const result = {
+        temperature: fahrenheitToCelsius(tempF),
+        wind: typeof windRaw === 'number' ? windRaw : 0,
+        condition: conditionText
       };
+
+      weatherCache.set(cacheKey, result);
+      return result;
     }
 
     async function geocodeCity(cityName) {
       const params = new URLSearchParams({
-        name: cityName,
-        count: '1',
-        language: 'en',
-        format: 'json'
+        address: cityName
       });
+
       const response = await fetch(`${GEOCODE_BASE_URL}?${params.toString()}`);
+
       if (!response.ok) {
         throw new Error('City lookup failed.');
       }
+
       const data = await response.json();
+
       if (!data.results || data.results.length === 0) {
         throw new Error('We could not find that city.');
       }
+
       const place = data.results[0];
+
       return {
-        latitude: place.latitude,
-        longitude: place.longitude,
-        label: [place.name, place.admin1, place.country].filter(Boolean).join(', ')
+        latitude: place.geometry.location.lat,
+        longitude: place.geometry.location.lng,
+        label: place.formatted_address
       };
     }
 
@@ -989,22 +1048,23 @@
       els.userLocationLabel.textContent = label;
       els.userTemp.textContent = formatTemp(weather.temperature);
       els.userCondition.textContent = weather.condition;
-      els.userWind.textContent = `${Math.round(weather.wind)} km/h`;
+      els.userWind.textContent = formatWind(weather.wind);
       els.userSource.textContent = sourceLabel;
       els.userSourcePill.textContent = sourceLabel;
     }
 
     function renderNanjingWeather(weather) {
+      els.nanjingWeatherDetails.hidden = false;
       els.nanjingTemp.textContent = formatTemp(weather.temperature);
       els.nanjingCondition.textContent = weather.condition;
-      els.nanjingWind.textContent = `${Math.round(weather.wind)} km/h`;
+      els.nanjingWind.textContent = formatWind(weather.wind);
     }
 
     function createChip(text) {
-      const span = document.createElement('span');
-      span.className = 'chip';
-      span.textContent = text;
-      return span;
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = text;
+      return chip;
     }
 
     function getClothingBand(temp) {
@@ -1015,6 +1075,7 @@
           packBase: ['extra thermal layer', 'warm socks', 'gloves', 'winter shoes']
         };
       }
+
       if (temp < 10) {
         return {
           wearSummary: 'It feels cold in Nanjing. A proper outer layer is a good idea.',
@@ -1022,6 +1083,7 @@
           packBase: ['one warm jacket', 'one extra sweater', 'thicker socks']
         };
       }
+
       if (temp < 20) {
         return {
           wearSummary: 'Nanjing is cool to mild. Layering is your best strategy.',
@@ -1029,6 +1091,7 @@
           packBase: ['light outer layer', 'mix of long and short sleeves', 'comfortable walking shoes']
         };
       }
+
       if (temp < 30) {
         return {
           wearSummary: 'Nanjing is warm. Dress lightly but keep one layer for indoor air conditioning.',
@@ -1036,6 +1099,7 @@
           packBase: ['light tops', 'thin overshirt', 'compact umbrella', 'comfortable summer clothes']
         };
       }
+
       return {
         wearSummary: 'Nanjing is hot. Prioritize breathable clothing and sun protection.',
         wearItems: ['light t-shirt', 'shorts or thin trousers', 'sun hat', 'sandals or airy sneakers'],
@@ -1044,14 +1108,40 @@
     }
 
     function renderAdvice() {
-      if (!state.userWeather || !state.nanjingWeather) {
+      if (!state.nanjingWeather) {
+        els.wearSummary.textContent = 'Load Nanjing weather to generate advice.';
+        els.wearChips.innerHTML = '';
+        els.packSummary.textContent = 'Packing tips will appear after you load Nanjing weather.';
+        els.packList.innerHTML = '';
+        els.tempDeltaBox.textContent = 'Load Nanjing weather to see the comparison.';
         return;
       }
 
       const nanjingTemp = state.nanjingWeather.temperature;
+      const band = getClothingBand(nanjingTemp);
+
+      els.wearSummary.textContent = band.wearSummary;
+      els.wearChips.innerHTML = '';
+      band.wearItems.forEach((item) => {
+        els.wearChips.appendChild(createChip(item));
+      });
+
+      if (!state.userWeather) {
+        els.packSummary.textContent =
+          `Nanjing is currently ${formatTemp(nanjingTemp)}. Load your location or enter your city to compare the two places.`;
+        els.packList.innerHTML = '';
+        band.packBase.forEach((item) => {
+          const listItem = document.createElement('li');
+          listItem.textContent = item;
+          els.packList.appendChild(listItem);
+        });
+        els.tempDeltaBox.textContent =
+          'Nanjing weather is loaded. Now load your location or enter your city to compare the two places.';
+        return;
+      }
+
       const userTemp = state.userWeather.temperature;
       const delta = Math.round(nanjingTemp - userTemp);
-      const band = getClothingBand(nanjingTemp);
       const extraPack = [];
 
       if (delta <= -10) {
@@ -1065,23 +1155,19 @@
       if (state.nanjingWeather.condition.toLowerCase().includes('rain')) {
         extraPack.push('Bring a compact umbrella because rain is currently part of the forecast.');
       }
+
       if (state.nanjingWeather.wind >= 20) {
         extraPack.push('It is fairly windy, so a light outer layer or wind-resistant jacket will help.');
       }
 
-      els.wearSummary.textContent = band.wearSummary;
-      els.wearChips.innerHTML = '';
-      band.wearItems.forEach((item) => {
-        els.wearChips.appendChild(createChip(item));
-      });
-
-      els.packSummary.textContent = `Packing suggestion based on Nanjing now (${formatTemp(nanjingTemp)}) compared with your location (${formatTemp(userTemp)}).`;
+      els.packSummary.textContent =
+        `Packing suggestion based on Nanjing now (${formatTemp(nanjingTemp)}) compared with your location (${formatTemp(userTemp)}).`;
       els.packList.innerHTML = '';
 
       [...band.packBase, ...extraPack].forEach((item) => {
-        const li = document.createElement('li');
-        li.textContent = item;
-        els.packList.appendChild(li);
+        const listItem = document.createElement('li');
+        listItem.textContent = item;
+        els.packList.appendChild(listItem);
       });
 
       if (delta > 0) {
@@ -1093,13 +1179,186 @@
       }
     }
 
+    async function loadNanjingWeather() {
+      try {
+        els.loadNanjingBtn.disabled = true;
+        els.loadNanjingBtn.textContent = 'Loading...';
+        els.nanjingPreviewText.textContent = 'Fetching Nanjing weather from the course API...';
+        els.nanjingErrorDetail.textContent = '';
+
+        const weather = await fetchWeatherByCoords(
+          NANJING_COORDS.latitude,
+          NANJING_COORDS.longitude
+        );
+
+        state.nanjingWeather = weather;
+        renderNanjingWeather(weather);
+        renderAdvice();
+
+        els.loadNanjingBtn.textContent = 'Refresh Nanjing weather';
+        setStatus('Nanjing weather loaded successfully.', 'success');
+      } catch (error) {
+        const fallbackWeather = {
+          temperature: 18,
+          wind: 8,
+          condition: 'Estimated mild weather'
+        };
+
+        state.nanjingWeather = fallbackWeather;
+        renderNanjingWeather(fallbackWeather);
+        renderAdvice();
+
+        els.nanjingPreviewText.textContent =
+          'The live API response for Nanjing was unstable, so this card is using a fallback estimate for trip planning.';
+        els.nanjingErrorDetail.textContent =
+          'Fallback used: estimated Nanjing average temperature 18°C.';
+        els.loadNanjingBtn.textContent = 'Try live weather again';
+
+        setStatus(
+          'Live Nanjing weather was unavailable, so a fallback estimate is being used.',
+          'warning'
+        );
+      }
+    }
+
+    async function useManualCity(cityName) {
+      if (isLoadingUserWeather) {
+        setStatus('A weather request is already in progress. Please wait a moment.', 'warning');
+        return;
+      }
+
+      try {
+        isLoadingUserWeather = true;
+        els.useLocationBtn.disabled = true;
+        setStatus('Looking up your city and loading weather...', 'info');
+
+        const place = await geocodeCity(cityName);
+        const weather = await fetchWeatherByCoords(place.latitude, place.longitude);
+
+        state.userWeather = weather;
+        state.userLocationName = place.label;
+
+        renderUserWeather(weather, place.label, 'manual city');
+        renderAdvice();
+        setStatus('Manual city weather loaded successfully.', 'success');
+      } catch (error) {
+        setStatus(error.message || 'We could not load weather for that city.', 'error');
+      } finally {
+        isLoadingUserWeather = false;
+        els.useLocationBtn.disabled = false;
+      }
+    }
+
+    function handleGeoSuccess(position) {
+      const { latitude, longitude } = position.coords;
+      setStatus('Location received. Loading your local weather...', 'info');
+
+      fetchWeatherByCoords(latitude, longitude)
+        .then((weather) => {
+          state.userWeather = weather;
+          state.userLocationName = `Near ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
+          renderUserWeather(weather, state.userLocationName, 'GPS location');
+          renderAdvice();
+          setStatus('Your location weather loaded successfully.', 'success');
+        })
+        .catch((error) => {
+          setStatus(
+            error.message || 'We got your location, but the weather request failed. You can try again or enter your city manually.',
+            'error'
+          );
+        })
+        .finally(() => {
+          isLoadingUserWeather = false;
+          els.useLocationBtn.disabled = false;
+        });
+    }
+
+    function handleGeoError(error) {
+      let message = 'Location access was denied. You can still enter your city manually below.';
+
+      if (error && error.code === 2) {
+        message = 'Your location could not be determined. Please enter your city manually below.';
+      }
+
+      if (error && error.code === 3) {
+        message = 'Location request timed out. You can try again or enter your city manually.';
+      }
+
+      setStatus(message, 'warning');
+    }
+
+    function requestLocation() {
+      if (isLoadingUserWeather) {
+        setStatus('A weather request is already in progress. Please wait a moment.', 'warning');
+        return;
+      }
+
+      if (!('geolocation' in navigator)) {
+        setStatus('Geolocation is not supported in this browser. Please enter your city manually.', 'warning');
+        return;
+      }
+
+      isLoadingUserWeather = true;
+      els.useLocationBtn.disabled = true;
+      setStatus('Requesting your location permission...', 'info');
+
+      navigator.geolocation.getCurrentPosition(
+        handleGeoSuccess,
+        (error) => {
+          handleGeoError(error);
+          isLoadingUserWeather = false;
+          els.useLocationBtn.disabled = false;
+        },
+        {
+          enableHighAccuracy: false,
+          timeout: 10000,
+          maximumAge: 300000
+        }
+      );
+    }
+
     function shuffle(array) {
       const copy = [...array];
-      for (let i = copy.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
+      for (let index = copy.length - 1; index > 0; index -= 1) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [copy[index], copy[randomIndex]] = [copy[randomIndex], copy[index]];
       }
       return copy;
+    }
+
+    function populateVoiceOptions() {
+      if (!('speechSynthesis' in window)) {
+        els.voiceSelect.innerHTML = '<option>No browser speech support</option>';
+        els.voiceSelect.disabled = true;
+        return;
+      }
+
+      availableVoices = window.speechSynthesis.getVoices();
+      els.voiceSelect.innerHTML = '';
+
+      const preferredVoices = availableVoices.filter((voice) =>
+        voice.lang.toLowerCase().includes('zh')
+      );
+
+      const voicesToShow = preferredVoices.length ? preferredVoices : availableVoices;
+
+      if (!voicesToShow.length) {
+        const option = document.createElement('option');
+        option.textContent = 'No voices available yet';
+        option.value = '';
+        els.voiceSelect.appendChild(option);
+        return;
+      }
+
+      voicesToShow.forEach((voice, index) => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (index === 0) {
+          option.selected = true;
+        }
+        els.voiceSelect.appendChild(option);
+      });
     }
 
     function speakMandarin(text) {
@@ -1109,10 +1368,20 @@
       }
 
       window.speechSynthesis.cancel();
+
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'zh-CN';
-      utterance.rate = 0.82;
-      utterance.pitch = 1;
+      utterance.rate = Number(els.rateControl.value);
+      utterance.pitch = Number(els.pitchControl.value);
+
+      const selectedVoice = availableVoices.find(
+        (voice) => voice.name === els.voiceSelect.value
+      );
+
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+
       window.speechSynthesis.speak(utterance);
     }
 
@@ -1142,7 +1411,6 @@
       back.innerHTML = `
         <div class="food-back-content">
           <div class="food-meta">${food.nameZh} · ${food.nameEn}</div>
-          <h3>Try this in Nanjing</h3>
           <p>${food.description}</p>
           <p><strong>Politely instruct your waiter:</strong> ${food.phrase}</p>
           <div class="food-actions">
@@ -1182,94 +1450,8 @@
       });
     }
 
-    async function loadNanjingWeather() {
-      try {
-        const weather = await fetchWeatherByCoords(NANJING_COORDS.latitude, NANJING_COORDS.longitude);
-        state.nanjingWeather = weather;
-        renderNanjingWeather(weather);
-        renderAdvice();
-      } catch (error) {
-        els.nanjingCondition.textContent = 'Unavailable right now';
-        setStatus('We could not load Nanjing weather just now. Please try again in a moment.', 'error');
-      }
-    }
-
-    async function useManualCity(cityName) {
-      try {
-        setStatus('Looking up your city and loading weather...', 'info');
-        const place = await geocodeCity(cityName);
-        const weather = await fetchWeatherByCoords(place.latitude, place.longitude);
-        state.userWeather = weather;
-        state.userLocationName = place.label;
-        renderUserWeather(weather, place.label, 'manual city');
-        renderAdvice();
-        setStatus('Manual city weather loaded successfully.', 'success');
-      } catch (error) {
-        setStatus(error.message || 'We could not load weather for that city.', 'error');
-      }
-    }
-
-    function handleGeoSuccess(position) {
-      const { latitude, longitude } = position.coords;
-      setStatus('Location received. Loading your local weather...', 'info');
-
-      fetchWeatherByCoords(latitude, longitude)
-        .then((weather) => {
-          state.userWeather = weather;
-          state.userLocationName = `Near ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`;
-          renderUserWeather(weather, state.userLocationName, 'GPS location');
-          renderAdvice();
-          setStatus('Your location weather loaded successfully.', 'success');
-        })
-        .catch(() => {
-          setStatus('We got your location, but the weather request failed. You can try again or enter your city manually.', 'error');
-        });
-    }
-
-    function handleGeoError(error) {
-      let message = 'Location access was denied. You can still enter your city manually below.';
-      if (error && error.code === 2) {
-        message = 'Your location could not be determined. Please enter your city manually below.';
-      }
-      if (error && error.code === 3) {
-        message = 'Location request timed out. You can try again or enter your city manually.';
-      }
-      setStatus(message, 'warning');
-    }
-
-    function requestLocation() {
-      if (!('geolocation' in navigator)) {
-        setStatus('Geolocation is not supported in this browser. Please enter your city manually.', 'warning');
-        return;
-      }
-
-      setStatus('Requesting your location permission...', 'info');
-      navigator.geolocation.getCurrentPosition(handleGeoSuccess, handleGeoError, {
-        enableHighAccuracy: false,
-        timeout: 10000,
-        maximumAge: 300000
-      });
-    }
-
-    els.useLocationBtn.addEventListener('click', requestLocation);
-
-    els.manualCityForm.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const city = els.manualCityInput.value.trim();
-      if (!city) {
-        setStatus('Please type a city name first.', 'warning');
-        return;
-      }
-      useManualCity(city);
-    });
-
-    els.refreshFoodBtn.addEventListener('click', () => {
-      renderFoodGrid();
-      setStatus('New food recommendations loaded. Click any card to flip it.', 'info');
-    });
-
     const PACKING_NOTE_KEY = 'nanjing-packing-note';
-    const DEFAULT_NOTE = '我已经放进箱子里的衣服是';
+    const DEFAULT_NOTE = 'I will type in what I already have in my luggage';
 
     function loadPackingNote() {
       const saved = localStorage.getItem(PACKING_NOTE_KEY);
@@ -1280,7 +1462,28 @@
       localStorage.setItem(PACKING_NOTE_KEY, els.packingNote.value);
     }
 
+    els.useLocationBtn.addEventListener('click', requestLocation);
+    els.loadNanjingBtn.addEventListener('click', loadNanjingWeather);
+
+    els.manualCityForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const city = els.manualCityInput.value.trim();
+
+      if (!city) {
+        setStatus('Please type a city name first.', 'warning');
+        return;
+      }
+
+      useManualCity(city);
+    });
+
+    els.refreshFoodBtn.addEventListener('click', () => {
+      renderFoodGrid();
+      setStatus('New food recommendations loaded. Click any card to flip it.', 'info');
+    });
+
     els.packingNote.addEventListener('input', savePackingNote);
+
     els.clearNoteBtn.addEventListener('click', () => {
       els.packingNote.value = DEFAULT_NOTE;
       savePackingNote();
@@ -1289,7 +1492,12 @@
 
     loadPackingNote();
     renderFoodGrid();
-    loadNanjingWeather();
+    renderAdvice();
+    populateVoiceOptions();
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = populateVoiceOptions;
+    }
   </script>
 </body>
 </html>
