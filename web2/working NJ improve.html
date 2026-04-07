@@ -701,7 +701,7 @@
                   <h3 id="nanjing-weather-title">Nanjing</h3>
                   <div class="weather-location">32.0617° N, 118.7778° E</div>
                 </div>
-                <span class="pill">live weather</span>
+                <span class="pill">live / estimated weather</span>
               </div>
 
               <button class="btn btn-primary" id="load-nanjing-btn" type="button">
@@ -757,7 +757,7 @@
               <div class="preview-card note-panel">
                 <h3>Packing note</h3>
                 <div class="note-panel-grid">
-                  <textarea id="packing-note" class="control-textarea">I will type in what I already have in my luggage</textarea>
+                  <textarea id="packing-note" class="control-textarea">Feel free to type in what you already have in your luggage</textarea>
                   <button class="btn btn-secondary" id="clear-note-btn" type="button">Clear</button>
                 </div>
               </div>
@@ -1067,43 +1067,43 @@
       return chip;
     }
 
-    function getClothingBand(temp) {
-      if (temp < 0) {
+    function getClothingBand(delta) {
+      if (delta <= -10) {
         return {
-          wearSummary: 'Nanjing is very cold right now. Dress for winter conditions.',
-          wearItems: ['heavy down coat', 'thick sweater', 'scarf', 'warm trousers'],
-          packBase: ['extra thermal layer', 'warm socks', 'gloves', 'winter shoes']
+          wearSummary: 'Nanjing is much colder than your current location, so you should dress noticeably warmer.',
+          wearItems: ['warm coat', 'sweater', 'long pants', 'closed shoes'],
+          packBase: ['one thicker outer layer', 'extra warm top', 'thicker socks']
         };
       }
 
-      if (temp < 10) {
+      if (delta < -3) {
         return {
-          wearSummary: 'It feels cold in Nanjing. A proper outer layer is a good idea.',
-          wearItems: ['coat or padded jacket', 'sweater', 'long pants', 'closed shoes'],
-          packBase: ['one warm jacket', 'one extra sweater', 'thicker socks']
+          wearSummary: 'Nanjing is a bit colder than your current location, so bring an extra layer.',
+          wearItems: ['light coat or jacket', 'long-sleeve top', 'long pants'],
+          packBase: ['one light outer layer', 'an extra long-sleeve top']
         };
       }
 
-      if (temp < 20) {
+      if (delta <= 3) {
         return {
-          wearSummary: 'Nanjing is cool to mild. Layering is your best strategy.',
-          wearItems: ['light jacket', 'long-sleeve top', 'jeans or relaxed pants'],
-          packBase: ['light outer layer', 'mix of long and short sleeves', 'comfortable walking shoes']
+          wearSummary: 'Nanjing feels close to your current weather, so you can pack similarly.',
+          wearItems: ['similar outfit to what feels comfortable now', 'light layers'],
+          packBase: ['a balanced mix of layers', 'comfortable walking clothes']
         };
       }
 
-      if (temp < 30) {
+      if (delta < 10) {
         return {
-          wearSummary: 'Nanjing is warm. Dress lightly but keep one layer for indoor air conditioning.',
-          wearItems: ['t-shirt or blouse', 'light pants or skirt', 'breathable shoes'],
-          packBase: ['light tops', 'thin overshirt', 'compact umbrella', 'comfortable summer clothes']
+          wearSummary: 'Nanjing is a bit warmer than your current location, so lighter clothing will help.',
+          wearItems: ['light top', 'breathable pants or skirt', 'lighter shoes'],
+          packBase: ['lighter layers', 'fewer heavy pieces']
         };
       }
 
       return {
-        wearSummary: 'Nanjing is hot. Prioritize breathable clothing and sun protection.',
-        wearItems: ['light t-shirt', 'shorts or thin trousers', 'sun hat', 'sandals or airy sneakers'],
-        packBase: ['extra light tops', 'sun protection', 'refillable water bottle', 'thin clothing for heat']
+        wearSummary: 'Nanjing is much warmer than your current location, so prioritize breathable clothing.',
+        wearItems: ['t-shirt or blouse', 'light pants or skirt', 'breathable shoes'],
+        packBase: ['light tops', 'breathable outfits', 'avoid overpacking heavy layers']
       };
     }
 
@@ -1118,23 +1118,14 @@
       }
 
       const nanjingTemp = state.nanjingWeather.temperature;
-      const band = getClothingBand(nanjingTemp);
-
-      els.wearSummary.textContent = band.wearSummary;
-      els.wearChips.innerHTML = '';
-      band.wearItems.forEach((item) => {
-        els.wearChips.appendChild(createChip(item));
-      });
 
       if (!state.userWeather) {
+        els.wearSummary.textContent =
+          `Nanjing is around ${formatTemp(nanjingTemp)} right now. Load your location to get a temperature-difference-based suggestion.`;
+        els.wearChips.innerHTML = '';
         els.packSummary.textContent =
-          `Nanjing is currently ${formatTemp(nanjingTemp)}. Load your location or enter your city to compare the two places.`;
+          'Load your location or enter your city to generate personalized packing advice.';
         els.packList.innerHTML = '';
-        band.packBase.forEach((item) => {
-          const listItem = document.createElement('li');
-          listItem.textContent = item;
-          els.packList.appendChild(listItem);
-        });
         els.tempDeltaBox.textContent =
           'Nanjing weather is loaded. Now load your location or enter your city to compare the two places.';
         return;
@@ -1142,14 +1133,16 @@
 
       const userTemp = state.userWeather.temperature;
       const delta = Math.round(nanjingTemp - userTemp);
+      const band = getClothingBand(delta);
       const extraPack = [];
+      let deltaSummary = '';
 
-      if (delta <= -10) {
-        extraPack.push('Nanjing is much colder than where you are now, so pack at least one noticeably warmer layer.');
-      } else if (delta >= 10) {
-        extraPack.push('Nanjing is much warmer than your current location, so bring lighter and more breathable pieces.');
+      if (delta > 0) {
+        deltaSummary = `Nanjing is about ${delta}°C warmer than your current location.`;
+      } else if (delta < 0) {
+        deltaSummary = `Nanjing is about ${Math.abs(delta)}°C colder than your current location.`;
       } else {
-        extraPack.push('The temperature difference is moderate, so you can pack a balanced mix of layers.');
+        deltaSummary = 'Nanjing and your current location are at about the same temperature right now.';
       }
 
       if (state.nanjingWeather.condition.toLowerCase().includes('rain')) {
@@ -1160,23 +1153,25 @@
         extraPack.push('It is fairly windy, so a light outer layer or wind-resistant jacket will help.');
       }
 
-      els.packSummary.textContent =
-        `Packing suggestion based on Nanjing now (${formatTemp(nanjingTemp)}) compared with your location (${formatTemp(userTemp)}).`;
-      els.packList.innerHTML = '';
+      els.wearSummary.textContent = `${deltaSummary} ${band.wearSummary}`;
 
+      els.wearChips.innerHTML = '';
+      band.wearItems.forEach((item) => {
+        els.wearChips.appendChild(createChip(item));
+      });
+
+      els.packSummary.textContent =
+        `Packing suggestion based on the temperature difference between your location and Nanjing.`;
+
+      els.packList.innerHTML = '';
       [...band.packBase, ...extraPack].forEach((item) => {
         const listItem = document.createElement('li');
         listItem.textContent = item;
         els.packList.appendChild(listItem);
       });
 
-      if (delta > 0) {
-        els.tempDeltaBox.textContent = `Nanjing is about ${delta}°C warmer than your current location.`;
-      } else if (delta < 0) {
-        els.tempDeltaBox.textContent = `Nanjing is about ${Math.abs(delta)}°C colder than your current location.`;
-      } else {
-        els.tempDeltaBox.textContent = 'Nanjing and your current location are at about the same temperature right now.';
-      }
+      els.tempDeltaBox.textContent =
+        `${deltaSummary} Suggested outfit adjustment: ${band.wearItems.join(', ')}.`;
     }
 
     async function loadNanjingWeather() {
@@ -1451,7 +1446,7 @@
     }
 
     const PACKING_NOTE_KEY = 'nanjing-packing-note';
-    const DEFAULT_NOTE = 'I will type in what I already have in my luggage';
+    const DEFAULT_NOTE = 'Feel free to type in what you already have in your luggage';
 
     function loadPackingNote() {
       const saved = localStorage.getItem(PACKING_NOTE_KEY);
